@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import "model/loginModel.dart";
-import 'shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:splash_screen/mainpage.dart';
