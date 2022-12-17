@@ -3,45 +3,10 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import "model/loginModel.dart";
 import 'shared_preferences.dart';
-import 'login_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:splash_screen/mainpage.dart';
 import 'package:http/http.dart' as http;
-
-//Api Login
-Future<LoginResponse?> requestLogin(String nisp, String password) async {
-  try {
-    const String apiURL = 
-        'http://localhost:8080/api/login';
-
-    var response = await http.post(Uri.parse(apiURL), body: {
-      "nisp": nisp,
-      "password": password,
-    });
-
-    debugPrint("Api Request -> login : $nisp | $password");
-    debugPrint("Api Response -> login : ${response.body.toString()}");
-
-    final LoginResponse? loginResponse =
-        LoginResponse.fromObject(response.body);
-
-    if (response.statusCode == 200 && loginResponse?.data != null) {
-      //save token
-      Preferences.saveLogin(LoginModel(nisp: nisp, password: password))
-      Preferences.saveAuth(loginResponse?.data);
-    }
-
-    return loginResponse;
-  } catch (e) {
-    debugPrint("Api Response -> login error : $e.toString()");
-  }
-  return null;
-}
-
-Future<AuthState> getAuthState() async{
-  
-}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
