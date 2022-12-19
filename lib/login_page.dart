@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'login_api.dart';
 import 'package:splash_screen/mainpage.dart';
-import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,6 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController nispController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: TextField(
+                              controller: nispController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'NISP',
@@ -94,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: TextField(
+                              controller: passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -136,7 +140,11 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 20,
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          await requestLogin(
+                            nispController.text,
+                            passwordController.text,
+                          );
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => mainpage()),
@@ -144,6 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: const Text(
                           'Login',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color.fromARGB(255, 255, 255, 255),
                             fontSize: 15,
